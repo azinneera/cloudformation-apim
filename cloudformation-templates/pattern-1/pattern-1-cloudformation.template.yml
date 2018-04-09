@@ -159,7 +159,7 @@ Parameters:
     Description: Enter product name
   ProductVersion:
     Type: String
-    Default: "2.1.0"
+    Default: "2.2.0"
     Description: Enter product version
   OS:
     Type: String
@@ -448,8 +448,8 @@ Resources:
             mkdir workspace
             cd workspace
             git clone https://github.com/azinneera/cloudformation-apim
-            chown -R ubuntu cloudformation-apim
             cd cloudformation-apim
+            git checkout 2.2.0
             scripts/setup-env.sh -os ${OS} -rdsengine ${DBEngine} -wumuser ${WUMUsername} -wumpwd ${WUMPassword} -jdk ${JDK}
             scripts/setup-apim.sh -os ${OS} -rdshost ${WSO2EnvDBInstance.Endpoint.Address} -rdsport ${WSO2EnvDBInstance.Endpoint.Port} -rdsengine ${DBEngine} -rdsversion ${DBEngineVersion} -rdsusername ${DBUsername} -rdspassword ${DBPassword} -lbhost ${WSO2EnvAPIMApplicationLoadBalancer.DNSName} -pname ${ProductName} -pversion ${ProductVersion}
             cat /dev/null > ~/.bash_history && history -c

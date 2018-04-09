@@ -33,10 +33,10 @@ deploymentConfig:
           inputParameters:
 scenarioConfig:
   scenarios:
-  -
-    name: scenario01
-    description: 'API Development'
-    dir: scenario01
+#  -
+#    name: scenario01
+#    description: 'API Development'
+#    dir: scenario01
   -
     name: scenario03
     description: 'App Development with APIs'
