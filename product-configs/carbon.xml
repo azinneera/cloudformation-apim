@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <!--
- Copyright (c) 2015, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
+ Copyright (c) 2017, WSO2 Inc. (http://www.wso2.org) All Rights Reserved.
 
  Licensed under the Apache License, Version 2.0 (the "License");
  you may not use this file except in compliance with the License.
@@ -36,7 +36,7 @@
     <!--
        Product Version
     -->
-    <Version>2.1.0</Version>
+    <Version>2.2.0</Version>
 
     <!--
        Host name or IP address of the machine hosting this server
@@ -58,7 +58,7 @@
        -->
     <ServerURL>local:/${carbon.context}/services/</ServerURL>
     <!--
-    <ServerURL>https://localhost:${carbon.management.port}${carbon.context}/services/</ServerURL>
+    <ServerURL>https://${carbon.local.ip}:${carbon.management.port}${carbon.context}/services/</ServerURL>
     -->
      <!--
      The URL of the index page. This is where the user will be redirected after signing in to the
@@ -433,7 +433,7 @@
 	 Security token store class name. If this is not set, default class will be
 	 org.wso2.carbon.security.util.SecurityTokenStore
 	-->
-	<!--<TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName>-->
+	<!--TokenStoreClassName>org.wso2.carbon.identity.sts.store.DBTokenStore</TokenStoreClassName-->
 
         <XSSPreventionConfig>
             <Enabled>true</Enabled>
@@ -443,11 +443,13 @@
             </Patterns>
         </XSSPreventionConfig>
     </Security>
-<!--<HideMenuItemIds>
-<HideMenuItemId>claim_mgt_menu</HideMenuItemId>
-<HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId>
-<HideMenuItemId>identity_security_questions_menu</HideMenuItemId>
-</HideMenuItemIds>-->
+ 
+ <!--Hide unnecessary menu Items--> 
+ <HideMenuItemIds> 
+ <HideMenuItemId>claim_mgt_menu</HideMenuItemId> 
+ <HideMenuItemId>identity_mgt_emailtemplate_menu</HideMenuItemId> 
+ <HideMenuItemId>identity_security_questions_menu</HideMenuItemId> 
+ </HideMenuItemIds>
 
     <!--
        The temporary work directory
@@ -578,16 +580,6 @@
         <SvnPassword>password</SvnPassword>
         <SvnUrlAppendTenantId>true</SvnUrlAppendTenantId>
     </DeploymentSynchronizer>
-
-    <!-- Deployment Synchronizer Configuration. Uncomment the following section when running with "registry based" dep sync.
-        In master nodes you need to set both AutoCommit and AutoCheckout to true
-        and in  worker nodes set only AutoCheckout to true.
-    -->
-    <!--<DeploymentSynchronizer>
-        <Enabled>true</Enabled>
-        <AutoCommit>false</AutoCommit>
-        <AutoCheckout>true</AutoCheckout>
-    </DeploymentSynchronizer>-->
 
     <!-- Mediation persistence configurations. Only valid if mediation features are available i.e. ESB -->
     <!--<MediationConfig>
