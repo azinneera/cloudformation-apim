@@ -577,6 +577,30 @@ Outputs:
   apimPort:
     Value: 443
     Description: Listening Port of ALB fronting WSO2 APIM Instance
+  pubHost:
+    Value: !Sub '${WSO2EnvAPIMApplicationLoadBalancer.DNSName}'
+    Description: DNS Name of the ALB fronting WSO2 APIM Instance
+  pubPort:
+    Value: 443
+    Description: Listening Port of ALB fronting WSO2 APIM Instance
+  storeHost:
+    Value: !Sub '${WSO2EnvAPIMApplicationLoadBalancer.DNSName}'
+    Description: DNS Name of the ALB fronting WSO2 APIM Instance
+  storePort:
+    Value: 443
+    Description: Listening Port of ALB fronting WSO2 APIM Instance
+  gwMgrHost:
+    Value: !Sub '${WSO2EnvAPIMApplicationLoadBalancer.DNSName}'
+    Description: DNS Name of the ALB fronting WSO2 APIM Instance
+  gwMgrHost:
+    Value: 443
+    Description: Listening Port of ALB fronting WSO2 APIM Instance
+  gwWrkHost:
+    Value: !Sub '${WSO2EnvAPIMApplicationLoadBalancer.DNSName}'
+    Description: DNS Name of the ALB fronting WSO2 APIM Instance
+  gwWrkPort:
+    Value: 443
+    Description: Listening Port of ALB fronting WSO2 APIM Instance
   WSO2APIMMCURL:
     Value: !Sub 'https://${WSO2EnvAPIMApplicationLoadBalancer.DNSName}/carbon'
     Description: Access URL of the Management Console
