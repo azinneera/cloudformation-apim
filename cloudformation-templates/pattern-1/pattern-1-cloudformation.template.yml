@@ -360,6 +360,14 @@ Resources:
         FromPort: 9443
         ToPort: 9443
         SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
+      - IpProtocol: tcp
+        FromPort: 8243
+        ToPort: 8243
+        SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
+      - IpProtocol: tcp
+        FromPort: 5672
+        ToPort: 5672
+        SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
   WSO2EnvLBSecurityGroup:
     Type: 'AWS::EC2::SecurityGroup'
     Properties:
@@ -369,6 +377,10 @@ Resources:
       - IpProtocol: tcp
         FromPort: 443
         ToPort: 443
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 8243
+        ToPort: 8243
         CidrIp: 0.0.0.0/0
   WSO2EnvDBSecurityGroup:
       Type: 'AWS::EC2::SecurityGroup'
@@ -546,6 +558,18 @@ Resources:
         - CertificateArn: !Ref ALBCertificateARN
       LoadBalancerArn: !Ref WSO2EnvAPIMApplicationLoadBalancer
       Port: 443
+      Protocol: HTTPS
+      SslPolicy: ELBSecurityPolicy-TLS-1-1-2017-01
+  WSO2EnvAPIMALBListener1:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref WSO2EnvAPIMALBTargetGroup
+      Certificates:
+        - CertificateArn: !Ref ALBCertificateARN
+      LoadBalancerArn: !Ref WSO2EnvAPIMApplicationLoadBalancer
+      Port: 8243
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-TLS-1-1-2017-01
 
