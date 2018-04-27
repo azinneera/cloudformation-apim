@@ -560,12 +560,40 @@ Resources:
       Port: 443
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-TLS-1-1-2017-01
+  WSO2EnvAPIMALBTargetGroup1:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 30
+      HealthCheckProtocol: HTTPS
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 4
+      HealthCheckPath: /carbon/admin/login.jsp
+      HealthCheckPort: 8243
+      Matcher:
+        HttpCode: 200
+      Name: apim-carbon-8243
+      Port: 8243
+      Protocol: HTTPS
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: '20'
+      - Key: stickiness.enabled
+        Value: 'true'
+      Targets:
+      - Id: !Ref WSO2EnvAPIMInstance
+        Port: 8243
+      UnhealthyThresholdCount: 3
+      VpcId:
+        Ref: WSO2EnvVPC
+      Tags:
+      - Key: Name
+        Value: apim-carbon-8243
   WSO2EnvAPIMALBListener1:
     Type: AWS::ElasticLoadBalancingV2::Listener
     Properties:
       DefaultActions:
         - Type: forward
-          TargetGroupArn: !Ref WSO2EnvAPIMALBTargetGroup
+          TargetGroupArn: !Ref WSO2EnvAPIMALBTargetGroup1
       Certificates:
         - CertificateArn: !Ref ALBCertificateARN
       LoadBalancerArn: !Ref WSO2EnvAPIMApplicationLoadBalancer

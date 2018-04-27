@@ -37,18 +37,18 @@ scenarioConfig:
 #    name: scenario01
 #    description: 'API Development'
 #    dir: scenario01
-  -
-    name: scenario03
-    description: 'App Development with APIs'
-    dir: scenario03
+#  -
+#    name: scenario03
+#    description: 'App Development with APIs'
+#    dir: scenario03
   -
     name: scenario04
     description: 'API Lifecycle Management'
     dir: scenario04
-  -
-    name: scenario05
-    description: 'API Versioning'
-    dir: scenario05
+#  -
+#    name: scenario05
+#    description: 'API Versioning'
+#    dir: scenario05
 #  -
 #    name: scenario06
 #    description: 'API Governance'
