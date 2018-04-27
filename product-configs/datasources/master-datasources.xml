@@ -53,11 +53,11 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:h2:repository/database/WSO2AM_DB;DB_CLOSE_ON_EXIT=FALSE</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
+                    <url>#_AM_DB_CONNECTION_URL_#</url>
+                    <username>#_AM_USER_#</username>
+                    <password>#_AM_USER_PWD_#</password>
                     <defaultAutoCommit>false</defaultAutoCommit>
-                    <driverClassName>org.h2.Driver</driverClassName>
+                    <driverClassName>#_DRIVER_CLASS_#</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>
@@ -97,10 +97,10 @@
             </jndiConfig>
             <definition type="RDBMS">
                 <configuration>
-                    <url>jdbc:h2:repository/database/WSO2MB_DB;DB_CLOSE_ON_EXIT=FALSE;LOCK_TIMEOUT=60000</url>
-                    <username>wso2carbon</username>
-                    <password>wso2carbon</password>
-                    <driverClassName>org.h2.Driver</driverClassName>
+                    <url>#_MB_DB_CONNECTION_URL_#</url>
+                    <username>#_MB_USER_#</username>
+                    <password>#_MB_USER_PWD_#</password>
+                    <driverClassName>#_DRIVER_CLASS_#</driverClassName>
                     <maxActive>50</maxActive>
                     <maxWait>60000</maxWait>
                     <testOnBorrow>true</testOnBorrow>

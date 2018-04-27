@@ -34,6 +34,10 @@ readonly METRICS_DB="wso2_metrics_db"
 
 UM_USER=$DB_USERNAME
 readonly UM_USER_PWD=$DB_PASSWORD
+AM_USER=$DB_USERNAME
+readonly AM_USER_PWD=$DB_PASSWORD
+MB_USER=$DB_USERNAME
+readonly MB_USER_PWD=$DB_PASSWORD
 GOV_REG_USER=$DB_USERNAME
 readonly GOV_REG_USER_PWD=$DB_PASSWORD
 CONFIG_REG_USER=$DB_USERNAME
@@ -142,8 +146,8 @@ setup_sqlserver_databases() {
     echo ">> Databases created!"
 
     echo ">> Creating tables..."
-    sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $AM_DB -i $DB_SCRIPTS_PATH/mssql.sql
-    sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $MB_DB -i $DB_SCRIPTS_PATH/mssql.sql
+    sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $AM_DB -i $DB_SCRIPTS_PATH/apimgt/mssql.sql
+    sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $MB_DB -i $DB_SCRIPTS_PATH/mb-store/mssql-mb.sql
     sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $GOV_REG_DB -i $DB_SCRIPTS_PATH/mssql.sql
     sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $CONFIG_REG_DB -i $DB_SCRIPTS_PATH/mssql.sql
     sqlcmd -S $DB_HOST -U $DB_USERNAME -P $DB_PASSWORD -d $METRICS_DB -i $DB_SCRIPTS_PATH/metrics/mssql.sql
@@ -162,8 +166,8 @@ setup_postgres_databases() {
     echo ">> Databases created!"
 
     echo ">> Creating tables..."
-    psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $AM_DB -f $DB_SCRIPTS_PATH/postgresql.sql
-    psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $MB_DB -f $DB_SCRIPTS_PATH/postgresql.sql
+    psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $AM_DB -f $DB_SCRIPTS_PATH/apimgt/postgresql.sql
+    psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $MB_DB -f $DB_SCRIPTS_PATH/mb-store/postgresql-mb.sql
     psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $GOV_REG_DB -f $DB_SCRIPTS_PATH/postgresql.sql
     psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $CONFIG_REG_DB -f $DB_SCRIPTS_PATH/postgresql.sql
     psql -h $DB_HOST -p $DB_PORT -U $DB_USERNAME -d $METRICS_DB -f $DB_SCRIPTS_PATH/metrics/postgresql.sql
@@ -208,6 +212,11 @@ configure_product() {
     echo ">> Configuring product "
     find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_APIM_LB_HOSTNAME_#/'$APIM_HOST_NAME'/g'
     find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's|#_AM_DB_CONNECTION_URL_#|'$(get_jdbc_connection_url $AM_DB)'|g'
+    find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_AM_USER_#/'$AM_USER'/g'
+    find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_AM_USER_PWD_#/'$AM_USER_PWD'/g'
+    find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's|#_MB_DB_CONNECTION_URL_#|'$(get_jdbc_connection_url $MB_DB)'|g'
+    find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_MB_USER_#/'$MB_USER'/g'
+    find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_MB_USER_PWD_#/'$MB_USER_PWD'/g'
     find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's|#_GOV_REG_DB_CONNECTION_URL_#|'$(get_jdbc_connection_url $GOV_REG_DB)'|g'
     find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_GOV_REG_USER_#/'$GOV_REG_USER'/g'
     find ${PRODUCT_HOME}/ -type f \( -iname "*.properties" -o -iname "*.xml" \) -print0 | xargs -0 sed -i 's/#_GOV_REG_USER_PWD_#/'$GOV_REG_USER_PWD'/g'
