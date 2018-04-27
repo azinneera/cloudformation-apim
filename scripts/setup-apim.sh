@@ -122,8 +122,8 @@ setup_oracle_databases() {
     echo ">> Setting up Oracle schemas ..."
     echo exit | sqlplus64 $DB_USERNAME/$DB_PASSWORD@//$DB_HOST/$SID @oracle.sql
     echo ">> Setting up Oracle tables ..."
-    echo exit | sqlplus64 $AM_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/oracle.sql
-    echo exit | sqlplus64 $MB_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/oracle.sql
+    echo exit | sqlplus64 $AM_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/apimgt/oracle.sql
+    echo exit | sqlplus64 $MB_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/mb-store/oracle-mb.sql
     echo exit | sqlplus64 $GOV_REG_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/oracle.sql
     echo exit | sqlplus64 $CONFIG_REG_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/oracle.sql
     echo exit | sqlplus64 $METRICS_DB/$DB_PASSWORD@//$DB_HOST/$SID @$DB_SCRIPTS_PATH/metrics/oracle.sql
