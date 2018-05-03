@@ -361,6 +361,10 @@ Resources:
         ToPort: 9443
         SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
       - IpProtocol: tcp
+        FromPort: 8280
+        ToPort: 8280
+        SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
+      - IpProtocol: tcp
         FromPort: 8243
         ToPort: 8243
         SourceSecurityGroupId: !Ref WSO2EnvLBSecurityGroup
@@ -377,6 +381,10 @@ Resources:
       - IpProtocol: tcp
         FromPort: 443
         ToPort: 443
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: 8280
+        ToPort: 8280
         CidrIp: 0.0.0.0/0
       - IpProtocol: tcp
         FromPort: 8243
@@ -600,6 +608,43 @@ Resources:
       Port: 8243
       Protocol: HTTPS
       SslPolicy: ELBSecurityPolicy-TLS-1-1-2017-01
+  WSO2EnvAPIMALBTargetGroup2:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      HealthCheckIntervalSeconds: 30
+      HealthCheckProtocol: HTTP
+      HealthCheckTimeoutSeconds: 10
+      HealthyThresholdCount: 4
+      HealthCheckPath: /carbon/admin/login.jsp
+      HealthCheckPort: 8280
+      Matcher:
+        HttpCode: 200
+      Name: apim-carbon-8280
+      Port: 8280
+      Protocol: HTTP
+      TargetGroupAttributes:
+      - Key: deregistration_delay.timeout_seconds
+        Value: '20'
+      - Key: stickiness.enabled
+        Value: 'true'
+      Targets:
+      - Id: !Ref WSO2EnvAPIMInstance
+        Port: 8280
+      UnhealthyThresholdCount: 3
+      VpcId:
+        Ref: WSO2EnvVPC
+      Tags:
+      - Key: Name
+        Value: apim-carbon-8280
+  WSO2EnvAPIMALBListener2:
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn: !Ref WSO2EnvAPIMALBTargetGroup2
+      LoadBalancerArn: !Ref WSO2EnvAPIMApplicationLoadBalancer
+      Port: 8280
+      Protocol: HTTP
 
 #####################################
 # Print details of the created stack
