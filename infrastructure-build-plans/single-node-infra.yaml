@@ -37,10 +37,10 @@ scenarioConfig:
 #    name: scenario01
 #    description: 'API Development'
 #    dir: scenario01
-#  -
-#    name: scenario03
-#    description: 'App Development with APIs'
-#    dir: scenario03
+  -
+    name: scenario03
+    description: 'App Development with APIs'
+    dir: scenario03
   -
     name: scenario04
     description: 'API Lifecycle Management'
@@ -57,3 +57,10 @@ scenarioConfig:
 #    name: scenario09
 #    description: 'Developer Enablement and Community Building'
 #    dir: scenario09
+  scripts:
+  -
+    file: "init.sh"
+    phase: CREATE
+  -
+    file: "cleanup.sh"
+    phase: DESTROY
