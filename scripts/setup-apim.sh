@@ -180,6 +180,8 @@ copy_libs() {
         cp /home/$USERNAME/sql-drivers/oracle-se.jar ${PRODUCT_HOME}/repository/components/lib
     elif [[ $DB_ENGINE =~ 'sqlserver' ]]; then
         cp /home/$USERNAME/sql-drivers/sqlserver-ex.jar ${PRODUCT_HOME}/repository/components/lib
+    elif [[ $DB_ENGINE =~ 'mariadb' ]]; then
+        cp /home/$USERNAME/sql-drivers/mysql.jar ${PRODUCT_HOME}/repository/components/lib
     else
         cp /home/$USERNAME/sql-drivers/$DB_ENGINE.jar ${PRODUCT_HOME}/repository/components/lib
     fi
@@ -202,7 +204,7 @@ get_jdbc_connection_url() {
     elif [[ $DB_ENGINE =~ 'sqlserver' ]]; then
         URL="jdbc:sqlserver://$DB_HOST:$DB_PORT;databaseName=$1"
     elif [[ $DB_ENGINE = "mariadb" ]]; then
-        URL="jdbc:mariadb://$DB_HOST:$DB_PORT/$1"
+        URL="jdbc:mysql://$DB_HOST:$DB_PORT/$1?useSSL=false"
     fi
     echo $URL
 }
@@ -241,7 +243,7 @@ get_driver_class() {
     elif [[ $DB_ENGINE =~ 'sqlserver' ]]; then
         DRIVER_CLASS="com.microsoft.sqlserver.jdbc.SQLServerDriver"
     elif [[ $DB_ENGINE = "mariadb" ]]; then
-        DRIVER_CLASS="org.mariadb.jdbc.Driver"
+        DRIVER_CLASS="com.mysql.jdbc.Driver"
     fi
     echo $DRIVER_CLASS
 }
