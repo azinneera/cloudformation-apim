@@ -17,10 +17,11 @@ readonly APIM_HOST_NAME=${16}
 readonly PRODUCT_NAME=${18}
 readonly PRODUCT_VERSION=${20}
 readonly WUM_PRODUCT_NAME=${PRODUCT_NAME}-${PRODUCT_VERSION}
-readonly WUM_PRODUCT_DIR=/home/${USERNAME}/.wum-wso2/products/${PRODUCT_NAME}/${PRODUCT_VERSION}
+readonly WUM_PRODUCT_DIR=/home/${USERNAME}/.wum3/products/${PRODUCT_NAME}/${PRODUCT_VERSION}
 readonly INSTALLATION_DIR=/opt/wso2
 readonly PRODUCT_HOME="${INSTALLATION_DIR}/${PRODUCT_NAME}-${PRODUCT_VERSION}"
 readonly DB_SCRIPTS_PATH="${PRODUCT_HOME}/dbscripts"
+readonly SQL_DRIVER_LOCATION="/opt/testgrid/sql-drivers"
 
 readonly POSTGRES_DB="wso2db"
 readonly SID="ORCL"
@@ -177,13 +178,13 @@ setup_postgres_databases() {
 copy_libs() {
     echo ">> Copying $DB_ENGINE jdbc driver "
     if [[ $DB_ENGINE =~ 'oracle' ]]; then
-        cp /home/$USERNAME/sql-drivers/oracle-se.jar ${PRODUCT_HOME}/repository/components/lib
+        cp $SQL_DRIVER_LOCATION/oracle-se.jar ${PRODUCT_HOME}/repository/components/lib
     elif [[ $DB_ENGINE =~ 'sqlserver' ]]; then
-        cp /home/$USERNAME/sql-drivers/sqlserver-ex.jar ${PRODUCT_HOME}/repository/components/lib
+        cp SQL_DRIVER_LOCATION/sqlserver-ex.jar ${PRODUCT_HOME}/repository/components/lib
     elif [[ $DB_ENGINE =~ 'mariadb' ]]; then
-        cp /home/$USERNAME/sql-drivers/mysql.jar ${PRODUCT_HOME}/repository/components/lib
+        cp SQL_DRIVER_LOCATION/mysql.jar ${PRODUCT_HOME}/repository/components/lib
     else
-        cp /home/$USERNAME/sql-drivers/$DB_ENGINE.jar ${PRODUCT_HOME}/repository/components/lib
+        cp SQL_DRIVER_LOCATION/$DB_ENGINE.jar ${PRODUCT_HOME}/repository/components/lib
     fi
 }
 
