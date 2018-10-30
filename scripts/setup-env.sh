@@ -67,8 +67,8 @@ setup_java() {
 
     ENV_VAR_FILE=/etc/environment
 
-    echo JDK_PARAM=${JDK} >> /home/ubuntu/java.txt
-    echo ORACLE_JDK9=${ORACLE_JDK9} >> /home/ubuntu/java.txt
+    echo JDK_PARAM=${JDK} >> /home/${USERNAME}/java.txt
+    echo ORACLE_JDK9=${ORACLE_JDK9} >> /home/${USERNAME}/java.txt
 
     if [[ $OS = "ubuntu" ]]; then
         source ${ENV_VAR_FILE}
