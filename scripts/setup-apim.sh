@@ -261,11 +261,7 @@ start_product() {
 
 main() {
     setup_wum_updated_pack
-    if [[ $OS = "ubuntu" ]]; then
-        source /etc/environment
-    elif [[ $OS = "centos" ]]; then
-        source /etc/profile.d/env.sh
-    fi
+    source /etc/environment
     echo "JAVA HOME: $JAVA_HOME"
     if [[ $DB_ENGINE = "postgres" ]]; then
         setup_postgres_databases
