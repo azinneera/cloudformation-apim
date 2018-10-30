@@ -85,7 +85,6 @@ setup_java() {
 }
 
 setup_java_env() {
-          JDK=ORACLE_JDK8
           source /etc/environment
 
           echo JDK_PARAM=${JDK} >> /opt/testgrid/java.txt
