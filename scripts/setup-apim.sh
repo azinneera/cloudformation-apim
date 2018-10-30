@@ -180,11 +180,11 @@ copy_libs() {
     if [[ $DB_ENGINE =~ 'oracle' ]]; then
         cp $SQL_DRIVER_LOCATION/oracle-se.jar ${PRODUCT_HOME}/repository/components/lib
     elif [[ $DB_ENGINE =~ 'sqlserver' ]]; then
-        cp SQL_DRIVER_LOCATION/sqlserver-ex.jar ${PRODUCT_HOME}/repository/components/lib
+        cp $SQL_DRIVER_LOCATION/sqlserver-ex.jar ${PRODUCT_HOME}/repository/components/lib
     elif [[ $DB_ENGINE =~ 'mariadb' ]]; then
-        cp SQL_DRIVER_LOCATION/mysql.jar ${PRODUCT_HOME}/repository/components/lib
+        cp $SQL_DRIVER_LOCATION/mysql.jar ${PRODUCT_HOME}/repository/components/lib
     else
-        cp SQL_DRIVER_LOCATION/$DB_ENGINE.jar ${PRODUCT_HOME}/repository/components/lib
+        cp $SQL_DRIVER_LOCATION/$DB_ENGINE.jar ${PRODUCT_HOME}/repository/components/lib
     fi
 }
 
