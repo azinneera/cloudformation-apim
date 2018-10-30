@@ -84,10 +84,36 @@ setup_java() {
     source ${ENV_VAR_FILE}
 }
 
+setup_java_env() {
+          JDK=ORACLE_JDK8
+          source /etc/environment
+
+          echo JDK_PARAM=${JDK} >> /opt/testgrid/java.txt
+          REQUESTED_JDK_PRESENT=$(grep "^${JDK}=" /etc/environment | wc -l)
+          if [ $REQUESTED_JDK_PRESENT = 0 ]; then
+          printf "The requested JDK, ${JDK}, not found in /etc/environment: \n $(cat /etc/environment)."
+          exit 1; // todo: inform via cfn-signal
+          fi
+            JAVA_HOME=$(grep "^${JDK}=" /etc/environment | head -1 | sed "s:${JDK}=\(.*\):\1:g" | sed 's:"::g')
+
+           echo ">> Setting up JAVA_HOME ..."
+            JAVA_HOME_EXISTS=$(grep -r "JAVA_HOME=" /etc/environment | wc -l  )
+            if [ $JAVA_HOME_EXISTS = 0 ]; then
+              echo ">> Adding JAVA_HOME entry."
+              echo JAVA_HOME=$JAVA_HOME >> /etc/environment
+            else
+              echo ">> Updating JAVA_HOME entry."
+              sed -i "/JAVA_HOME=/c\JAVA_HOME=$JAVA_HOME" /etc/environment
+          fi
+            source /etc/environment
+            echo "export JAVA_HOME=$JAVA_HOME" >> /etc/profile
+                      source /etc/profile
+}
+
 main() {
     mkdir -p ${LIB_DIR}
     install_wum
-    setup_java
+    setup_java_env
     echo "Done!"
 }
 
