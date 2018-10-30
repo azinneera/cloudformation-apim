@@ -266,6 +266,7 @@ main() {
     elif [[ $OS = "centos" ]]; then
         source /etc/profile.d/env.sh
     fi
+    echo "JAVA HOME: $JAVA_HOME"
     if [[ $DB_ENGINE = "postgres" ]]; then
         setup_postgres_databases
     elif [[ $DB_ENGINE = "mysql" ]]; then
